@@ -2,19 +2,20 @@
   <div>
     <v-container class="text-center pt-12">
       <h2 class="text-h2">Number Generator</h2>
-      <hr style="margin-left: 25%; margin-right: 25%;margin-top: 1%;">
-      <br>
+      <v-divider class="mx-16 my-5"></v-divider>
+
       <v-row justify="center">
-        <v-col cols="12" md="3">
-          <v-select v-model="selected" :items="options" outlined label="Number of Sets" hide-details clearable></v-select>
+        <v-col cols="12" md="4">
+          <v-slider v-model="size" min="4" max="10" thumb-label="always" class="mt-7" ticks="always" tick-size="2" @change="getNumbers"></v-slider>
         </v-col>
       </v-row>
+
       <v-row justify="center">
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="4">
           <ul>
-            <li v-for="(set, index) in sets" :key="index" class="py-3">
+            <li v-for="(set, index) in results" :key="index" class="py-3">
               <strong>Set {{ index + 1 }}:</strong>
-              {{ set.join(', ') }}
+              {{ set.join(", ") }}
             </li>
           </ul>
         </v-col>
@@ -27,48 +28,75 @@
 export default {
   data() {
     return {
-      selected: null,
-      options: [
-        { text: '1', value: 1 },
-        { text: '2', value: 2 },
-        { text: '3', value: 3 },
-        { text: '4', value: 4 },
-        { text: '5', value: 5 },
-        { text: '6', value: 6 },
-        { text: '7', value: 7 },
-        { text: '8', value: 8 },
-        { text: '9', value: 9 },
-        { text: '10', value: 10 },
+      size: null,
+      results: [],
+      games: [
+        [1, 5, 14, 15, 34, 42], //4413
+        [1, 2, 23, 24, 28, 30], //4415
+        [7, 8, 15, 16, 26, 31], //4417
+        [17, 20, 30, 36, 37, 44], //4419
+        [10, 14, 21, 22, 23, 42], //4421
+        [9, 11, 25, 32, 33, 44], //4423
+        [8, 12, 13, 17, 39, 41], //4425
+        [1, 20, 24, 31, 37, 39], //4427
+        [2, 3, 11, 24, 38, 39], //4429
+        [12, 13, 17, 34, 36, 42], //4431
+        [8, 33, 37, 39, 40, 41], //4433
+        [11, 22, 27, 33, 35, 37], //4435
+        [5, 8, 13, 24, 29, 36], //4437
+        [3, 11, 19, 22, 23, 29], //4439
       ],
+      list: [],
       sets: [],
     };
   },
 
-  watch: {
-    selected(newValue, oldValue) {
-      (newValue && newValue != oldValue) ? this.getNumbers() : this.sets = [];
-    }
-  },
+  watch: {},
 
   methods: {
     getNumbers() {
-      let temp;
-      this.sets = [];
+      this.results = [];
+      // Filter to get only repeating numbers
+      let list = this.list.filter((l) => l.tally != 0).map((m) => m.number);
 
-      for (let i = 0; i < this.selected; i++) {
-        temp = [];
+      // Loop based on game size (4 - 10)
+      for (let i = 0; i < this.size; i++) {
+        let temp = [];
+
         while (temp.length != 6) {
-          let num = Math.floor(Math.random() * (45 - 1) + 1);
-          if (!temp.includes(num)) {
-            temp.push(num);
-          }
+          // let num = Math.floor(Math.random() * (45 - 1) + 1);
+
+          // Get random value from list of used numbers
+          let num = list[Math.floor(Math.random() * list.length)];
+          if (!temp.includes(num)) temp.push(num);
         }
 
-        this.sets.push(temp);
+        this.results.push(temp);
       }
-    }
+    },
+
+    getStats() {
+      // Get total numbers from 1-45
+      for (let i = 1; i <= 45; i++) this.list.push({ number: i, tally: 0 });
+
+      // Loop through each game and get status
+      this.games.forEach((game) => {
+        game.forEach((num) => {
+          let index = this.list.findIndex((l) => l.number == num);
+
+          this.list[index].tally += 1;
+        });
+      });
+
+      this.getNumbers();
+    },
   },
-}
+
+  mounted() {
+    // this.getNumbers();
+    this.getStats();
+  },
+};
 </script>
 
 <style>
