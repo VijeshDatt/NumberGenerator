@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <v-app>
     <v-main>
@@ -7,17 +8,11 @@
 </template>
 
 <script>
-import MainComponent from './components/MainComponent.vue';
+import MainComponent from "./components/MainComponent.vue";
 
 export default {
-  name: 'App',
-
   components: {
     MainComponent,
   },
-
-  data: () => ({
-    //
-  }),
 };
 </script>
