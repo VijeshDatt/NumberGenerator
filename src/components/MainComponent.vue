@@ -71,7 +71,7 @@ export default {
           if (!temp.includes(num)) temp.push(num);
         }
 
-        this.results.push(temp);
+        this.results.push(temp.sort());
       }
     },
 
