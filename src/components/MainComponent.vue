@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container class="text-center pt-12">
+    <v-container class="text-center pt-12 mx-6 mx-md-auto">
       <h2 class="text-h2">Number Generator</h2>
       <v-divider class="mx-16 my-5"></v-divider>
 
@@ -45,6 +45,7 @@ export default {
         [11, 22, 27, 33, 35, 37], //4435
         [5, 8, 13, 24, 29, 36], //4437
         [3, 11, 19, 22, 23, 29], //4439
+        [1, 2, 12, 13, 20, 42], //4441
       ],
       list: [],
       sets: [],
@@ -57,21 +58,31 @@ export default {
     getNumbers() {
       this.results = [];
       // Filter to get only repeating numbers
-      let list = this.list.filter((l) => l.tally != 0).map((m) => m.number);
+      let list = this.list.filter((l) => l.tally > 2).map((m) => m.number);
 
       // Loop based on game size (4 - 10)
       for (let i = 0; i < this.size; i++) {
         let temp = [];
+        let even = [];
+        let odd = [];
 
-        while (temp.length != 6) {
-          // let num = Math.floor(Math.random() * (45 - 1) + 1);
-
+        while (even.length != 3) {
           // Get random value from list of used numbers
           let num = list[Math.floor(Math.random() * list.length)];
-          if (!temp.includes(num)) temp.push(num);
+
+          // if even and not in array, then push to array
+          if (num % 2 == 0 && !even.includes(num) && even.length <= 3) even.push(num);
         }
 
-        this.results.push(temp.sort());
+        while (odd.length != 3) {
+          // Get random value from list of used numbers
+          let num = list[Math.floor(Math.random() * list.length)];
+
+          // if odd and not in array, then push to array
+          if (num % 2 != 0 && !odd.includes(num) && odd.length <= 3) odd.push(num);
+        }
+
+        this.results.push(even.concat(odd).sort());
       }
     },
 
