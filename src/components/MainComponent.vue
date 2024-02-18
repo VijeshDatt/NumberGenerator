@@ -46,6 +46,7 @@ export default {
         [5, 8, 13, 24, 29, 36], //4437
         [3, 11, 19, 22, 23, 29], //4439
         [1, 2, 12, 13, 20, 42], //4441
+        [7, 11, 22, 25, 28, 34], //4443
       ],
       list: [],
       sets: [],
@@ -62,7 +63,6 @@ export default {
 
       // Loop based on game size (4 - 10)
       for (let i = 0; i < this.size; i++) {
-        let temp = [];
         let even = [];
         let odd = [];
 
@@ -82,7 +82,7 @@ export default {
           if (num % 2 != 0 && !odd.includes(num) && odd.length <= 3) odd.push(num);
         }
 
-        this.results.push(even.concat(odd).sort());
+        this.results.push(even.concat(odd).sort((a, b) => a - b));
       }
     },
 
