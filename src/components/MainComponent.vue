@@ -63,7 +63,7 @@ export default {
     getNumbers() {
       this.results = [];
       // Filter to get only repeating numbers
-      let max = Math.max(...this.list.map((e) => e.tally)) - 2;
+      let max = Math.max(...this.list.map((e) => e.tally)) - 3;
       let list = this.list.filter((l) => l.tally > max).map((m) => m.number);
 
       // Loop based on game size (4 - 10)
