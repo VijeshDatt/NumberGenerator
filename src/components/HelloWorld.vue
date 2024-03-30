@@ -1,23 +1,58 @@
 <template>
   <div>
-    <v-container class="text-center pt-12 mx-6 mx-md-auto">
-      <h2 class="text-h2">Number Generator</h2>
-      <v-divider class="mx-16 my-5"></v-divider>
-
+    <v-container class="text-center pa-12">
       <v-row justify="center">
-        <v-col cols="12" md="4">
-          <v-slider v-model="size" min="4" max="10" thumb-label="always" class="mt-7" ticks="always" tick-size="2" @change="getNumbers"></v-slider>
+        <v-col cols="12">
+          <h2 class="text-h2">Number Generator</h2>
+        </v-col>
+
+        <v-col cols="12">
+          <v-divider class="mx-16 my-5"></v-divider>
+        </v-col>
+
+        <v-col cols="12" md="5">
+          <v-slider
+            v-model="size"
+            min="4"
+            max="10"
+            step="1"
+            thumb-label="always"
+            class="mt-7"
+            show-ticks="always"
+            tick-size="2"
+            @update:model-value="getNumbers"
+          ></v-slider>
         </v-col>
       </v-row>
 
-      <v-row justify="center">
-        <v-col cols="12" md="4">
+      <v-row
+        justify="center"
+        v-for="(set, index) in results"
+        :key="`card-${index}`"
+      >
+        <!-- <v-col cols="12" md="6">
           <ul>
             <li v-for="(set, index) in results" :key="index" class="py-3">
               <strong>Set {{ index + 1 }}:</strong>
               {{ set.join(", ") }}
             </li>
           </ul>
+        </v-col> -->
+
+        <v-col cols="12" md="4">
+          <v-card variant="tonal" color="info" rounded="lg" density="compact">
+            <v-card-title class="text-start">
+              Set {{ index + 1 }}
+            </v-card-title>
+
+            <v-card-text>
+              <v-chip-group readonly>
+                <v-chip v-for="(num, idx) in set" :key="`chip-${idx}`">
+                  {{ num }}
+                </v-chip>
+              </v-chip-group>
+            </v-card-text>
+          </v-card>
         </v-col>
       </v-row>
     </v-container>
@@ -76,7 +111,8 @@ export default {
           let num = list[Math.floor(Math.random() * list.length)];
 
           // if even and not in array, then push to array
-          if (num % 2 == 0 && !even.includes(num) && even.length <= 3) even.push(num);
+          if (num % 2 == 0 && !even.includes(num) && even.length <= 3)
+            even.push(num);
         }
 
         while (odd.length != 3) {
@@ -84,7 +120,8 @@ export default {
           let num = list[Math.floor(Math.random() * list.length)];
 
           // if odd and not in array, then push to array
-          if (num % 2 != 0 && !odd.includes(num) && odd.length <= 3) odd.push(num);
+          if (num % 2 != 0 && !odd.includes(num) && odd.length <= 3)
+            odd.push(num);
         }
 
         this.results.push(even.concat(odd).sort((a, b) => a - b));
@@ -111,6 +148,7 @@ export default {
   mounted() {
     // this.getNumbers();
     this.getStats();
+    this.size = 4;
   },
 };
 </script>

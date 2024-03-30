@@ -1,18 +1,11 @@
-/* eslint-disable */
 <template>
   <v-app>
     <v-main>
-      <MainComponent></MainComponent>
+      <HelloWorld />
     </v-main>
   </v-app>
 </template>
 
-<script>
-import MainComponent from "./components/MainComponent.vue";
-
-export default {
-  components: {
-    MainComponent,
-  },
-};
+<script setup>
+import HelloWorld from "@/components/HelloWorld.vue";
 </script>
