@@ -1,11 +1,11 @@
 <template>
   <v-app>
     <v-main>
-      <HelloWorld />
+      <NumberGenerator />
     </v-main>
   </v-app>
 </template>
 
 <script setup>
-import HelloWorld from "@/components/HelloWorld.vue";
+import NumberGenerator from "@/components/NumberGenerator.vue";
 </script>
