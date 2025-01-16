@@ -10,25 +10,55 @@
       </v-col>
 
       <v-col cols="12" md="6">
-        <v-slider v-model="size" color="primary" thumb-color="primary" min="4" max="10" step="1" thumb-label="always" class="mx-9 mt-7" show-ticks="always" tick-size="2"></v-slider>
+        <v-slider
+          v-model="size"
+          color="primary"
+          thumb-color="primary"
+          min="4"
+          max="10"
+          step="1"
+          thumb-label="always"
+          class="mx-9 mt-7"
+          show-ticks="always"
+          tick-size="2"
+        ></v-slider>
       </v-col>
 
       <v-col cols="12" class="d-flex justify-center mb-6">
-        <v-btn @click="getNumbers" rounded="lg" color="primary" variant="tonal">Refresh</v-btn>
+        <v-btn @click="getNumbers" rounded="lg" color="primary" variant="tonal"
+          >Refresh</v-btn
+        >
       </v-col>
     </v-row>
 
     <v-row justify="center">
-      <v-col cols="12" md="5" v-for="(set, index) in results" :key="`card-${index}`">
+      <v-col
+        cols="12"
+        md="5"
+        v-for="(set, index) in results"
+        :key="`card-${index}`"
+      >
         <v-card variant="tonal" rounded="lg" density="compact">
           <v-card-title class="text-start mb-4">
             Game {{ index + 1 }}
           </v-card-title>
 
           <v-card-text class="px-0">
-            <v-row no-gutters align="center" justify="space-between" v-for="(row, idx) in rows" :key="`row-${idx}`">
+            <v-row
+              no-gutters
+              align="center"
+              justify="space-between"
+              v-for="(row, idx) in rows"
+              :key="`row-${idx}`"
+            >
               <v-col v-for="(num, i) in row" :key="`chip-${i}`">
-                <v-chip v-if="num" :variant="set.includes(num) ? 'flat' : 'plain'" :color="set.includes(num) ? 'primary' : undefined"> {{ num }} </v-chip>
+                <v-chip
+                  v-if="num"
+                  :variant="set.includes(num) ? 'flat' : 'plain'"
+                  :color="set.includes(num) ? 'primary' : undefined"
+                >
+                  {{ num }}
+                </v-chip>
               </v-col>
             </v-row>
 
@@ -68,6 +98,12 @@ export default {
         [5, 6, 8, 29, 38, 44], //4521
         [3, 6, 17, 25, 40, 42], //4523
         [8, 13, 16, 30, 39, 41], //4525
+        [1, 7, 11, 13, 16, 35], //4527
+        [6, 7, 11, 21, 30, 35], //4529
+        [9, 18, 25, 27, 38, 44], //4531
+        [4, 12, 26, 29, 40, 41], //4533
+        [8, 10, 19, 23, 31, 33], //4535
+        [6, 8, 18, 19, 29, 38], //4537
       ],
       list: [],
       sets: [],
@@ -126,7 +162,7 @@ export default {
 
     getStats() {
       // Get total numbers from 1-45
-      for (let i = 1; i <= 45; i++) this.list.push({number: i, tally: 0});
+      for (let i = 1; i <= 45; i++) this.list.push({ number: i, tally: 0 });
 
       // Loop through each game and get status
       this.games.forEach((game) => {
