@@ -7,5 +7,5 @@
 </template>
 
 <script setup>
-import NumberGenerator from "@/components/NumberGenerator.vue";
+import NumberGenerator from "../src/components/NumberGenerator.vue";
 </script>
